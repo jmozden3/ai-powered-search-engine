@@ -12,7 +12,7 @@
 ## Setup
 
 ### 1. Azure OpenAI
-- Need a text-embedding-ada-002 model deployed
+- Need a text-embedding-3-large model deployed
 
 ### 2. Azure AI Search
 - May need system-assigned identity turned on in your search service

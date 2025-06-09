@@ -7,10 +7,8 @@ query_prompt = """ You are given a user query. Historically, users had to manual
 
 User: give me all documents that contain the words "global distribution system"
 Assistant: {
-clarification_needed: no
 search_query: "global distribution system"
 filters: None
-answer_required: no
 }
 
 
