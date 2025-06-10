@@ -38,7 +38,7 @@ embeddings_model = AzureOpenAIEmbeddings(
 NUM_SEARCH_RESULTS = 15
 K_NEAREST_NEIGHBORS = 30
 
-def run_search(search_query: str, category_filter: str = None):
+def run_search(search_query: str):
     """
     Perform a search using Azure Cognitive Search with both semantic and vector queries.
     Searches across KeyFacts, DocumentText, and Commentary vector fields.
@@ -69,7 +69,6 @@ def run_search(search_query: str, category_filter: str = None):
     results = search_client.search(
         search_text=search_query,
         vector_queries=vector_queries,
-        filter=category_filter,
         select=["ID", "BrowserFile", "Title", "KeyFacts", "DocumentText", "Commentary", 
                 "DateIssued", "Published", "DocumentTypes", "NumberOfViolations", 
                 "SettlementAmount", "SanctionPrograms", "Industries"],
@@ -165,18 +164,17 @@ Synthesize these results into a clear, complete answer. Remember to cite which d
     response = openai_client.chat.completions.create(
         messages=messages,
         model=aoai_deployment,
-        max_completion_tokens=2000
+        max_completion_tokens=1000
     )
     
     return response.choices[0].message.content
 
-def process_question(question: str, category_filter: str = None):
+def process_question(question: str):
     """
     Main function that takes a user question, performs search, and generates answer.
     
     Args:
         question: The user's question
-        category_filter: Optional filter for search results
         
     Returns:
         dict: Contains the question, documents, and answer
@@ -184,7 +182,7 @@ def process_question(question: str, category_filter: str = None):
     # Step 1: User input (already provided)
     
     # Step 2 & 3: Convert to vector embedding and run search
-    documents = run_search(question, category_filter)
+    documents = run_search(question)
     
     # Step 4: Generate answer via LLM + search results
     answer = generate_answer(question, documents)
@@ -208,7 +206,7 @@ if __name__ == "__main__":
     
     print(f"\nQuestion: {result['question']}")
     
-    print(f"\nSearch Results:")
+    print(f"\nDocuments Found ({len(result['documents'])}):")
     for i, doc in enumerate(result['documents'], 1):
         print(f"{i}. {doc['title']}")
     
