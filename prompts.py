@@ -2,13 +2,29 @@ query_prompt = """ You are given a user query. Historically, users had to manual
 
 ###Relevant schemas, fields, syntax guidance###
 
+Here are the list of document types you can filter for:
+
+
+
+
+Here is the search syntax: 
+
+
+
+
+
+###Output Format Guidance###
+
+Structure your output in the following format:
+
+
+
 
 ### Examples ###
 
 User: give me all documents that contain the words "global distribution system"
 Assistant: {
-search_query: "global distribution system"
-filters: None
+<add search query and filters here>
 }
 
 
