@@ -52,7 +52,7 @@ aoai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 conn_str_base = os.getenv('AZURE_SQL_CONNECTION_STRING')
 
 # Table configuration - update these as needed
-table_name = 'EnforcementActionsSubset'
+table_name = 'EnforcementActionsFull2'
 
 # Initialize Azure clients
 search_index_client = SearchIndexClient(
@@ -183,6 +183,7 @@ def create_index():
         SimpleField(name="ID", type=SearchFieldDataType.String, key=True, filterable=True),
         SearchableField(name="BrowserFile", type=SearchFieldDataType.String, filterable=True),
         SearchableField(name="Title", type=SearchFieldDataType.String, filterable=True),
+        SimpleField(name="Ordinal", type=SearchFieldDataType.Double, filterable=True, facetable=True, sortable=True),
         SimpleField(name="DateIssued", type=SearchFieldDataType.DateTimeOffset, filterable=True, facetable=True),
         SimpleField(name="Published", type=SearchFieldDataType.Boolean, filterable=True),
         SimpleField(name="DocumentTypes", type=SearchFieldDataType.String, filterable=True),
