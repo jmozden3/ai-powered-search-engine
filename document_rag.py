@@ -8,6 +8,10 @@ import os
 
 load_dotenv()
 
+# Import tracing setup
+from tracing_setup import setup_tracing
+setup_tracing()
+
 # Azure Search configuration
 ai_search_endpoint = os.environ["AZURE_SEARCH_ENDPOINT"]
 ai_search_key = os.environ["AZURE_SEARCH_KEY"]
@@ -148,6 +152,7 @@ def generate_answer(user_question: str, search_results: list):
         formatted_results.append(f"DOCUMENT {i}:\n{result['content']}")
     
     llm_input = f"""Create a comprehensive answer to the user's question using these search results.
+    
 
 User Question: {user_question}
 
@@ -166,6 +171,8 @@ Synthesize these results into a clear, complete answer. Remember to cite which d
         model=aoai_deployment,
         max_completion_tokens=1000
     )
+
+    print("Calling OpenAI LLM...")
     
     return response.choices[0].message.content
 
