@@ -5,6 +5,7 @@ import sys
 import struct
 import pandas as pd
 from azure.identity import DefaultAzureCredential
+import openpyxl
 
 # Load environment variables from .env file
 from dotenv import load_dotenv
@@ -199,6 +200,7 @@ def check_schema_simple(headers):
     ]
     if headers != expected:
         print("ERROR: Data file schema has changed (columns added, removed, renamed, or reordered). Please review your data file.")
+        print(f"Headers: {headers}")
         sys.exit(1)
 
 def preflight_scan(headers, rows):
