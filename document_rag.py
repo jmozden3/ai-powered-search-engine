@@ -38,7 +38,7 @@ embeddings_model = AzureOpenAIEmbeddings(
 )
 
 # Configuration
-NUM_SEARCH_RESULTS = 2  # Note: Large values may prevent input tracing due to size limits
+NUM_SEARCH_RESULTS = 15  # Note: Large values may prevent input tracing due to size limits
 K_NEAREST_NEIGHBORS = 30
 
 def run_search(search_query: str):

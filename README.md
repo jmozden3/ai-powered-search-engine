@@ -99,16 +99,12 @@ Tracing is automatically initialized and configured for both API and command-lin
 To see Tracing in Azure AI Foundry:
 1. Create an Azure Application Insights Resource and copy the connection string
 2. Go to Tracing in your Azure AI Foundry and click Manage Data Source. Paste in the connection string.
-
-**⚠️ Important Tracing Configuration:**
-- The `NUM_SEARCH_RESULTS` parameter in `document_rag.py` is set to 15 documents
-- **Why this matters**: Higher values (e.g., 15+ documents) can cause input text fields to be hidden in Azure AI Foundry tracing due to token/character limits
-- If you need more search results, be aware that detailed input tracing may not be visible in the Azure AI Foundry interface (as currently constructed)
+*Warning: Large Input or Output token usage may result in Azure AI Foundry not logging the trace*
 
 ## Data Import Scripts
 
 ### CSV to Azure SQL Import
-The project includes optimized scripts for importing enforcement actions data:
+The project includes scripts for importing data:
 
 1. **Prepare your data:**
    - Place your CSV file in the project directory
