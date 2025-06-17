@@ -1,4 +1,23 @@
-# ai-powered-search-engine
+# AI-Powered Search Engine
+
+A sophisticated legal document search engine powered by Azure AI Search, Azure OpenAI, and advanced RAG (Retrieval-Augmented Generation) capabilities. This system enables intelligent search across legal enforcement documents with AI-generated answers and comprehensive tracing.
+
+## Features
+
+- **Advanced Search**: Hybrid semantic and vector search across multiple document fields (KeyFacts, DocumentText, Commentary)
+- **AI-Generated Answers**: Uses Azure OpenAI (o3-mini) to generate comprehensive answers based on search results
+- **FastAPI Web Interface**: RESTful API for integration with web applications
+- **Command Line Interface**: Direct Python execution for testing and development
+- **OpenTelemetry Tracing**: Full observability with Azure Monitor integration for monitoring AI operations
+- **Robust Data Import**: Optimized scripts for importing CSV/Excel data to Azure SQL
+
+## Architecture
+
+- **Frontend**: FastAPI web framework with automatic API documentation
+- **Search Engine**: Azure AI Search with vector embeddings using text-embedding-3-large
+- **AI Model**: Azure OpenAI o3-mini for answer generation
+- **Database**: Azure SQL Server for data storage
+- **Monitoring**: OpenTelemetry with Azure Monitor for tracing and observability
 
 ## Pre-reqs
 - Create all Azure resources in South Central US region
@@ -46,7 +65,45 @@
      AZURE_OPENAI_ENDPOINT=https://<your-openai-service>.openai.azure.com/
      AZURE_OPENAI_API_KEY=<your-openai-key>
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=<your-embedding-model-deployment-name>
+     APPLICATIONINSIGHTS_CONNECTION_STRING=<your-app-insights-connection-string>
      ```
+
+## Usage
+
+### Running the API Server
+Start the FastAPI server for web-based access:
+```sh
+python app.py
+```
+The API will be available at `http://localhost:8000` with interactive documentation at `http://localhost:8000/docs`
+
+### Direct Command Line Usage
+Run the search engine directly for testing:
+```sh
+python document_rag.py
+```
+
+### API Endpoints
+- **POST /chat**: Submit questions and receive AI-generated answers with source documents
+- **GET /health**: Health check endpoint
+- **GET /**: Root endpoint with service status
+
+### Tracing and Monitoring
+The application includes comprehensive OpenTelemetry tracing that captures:
+- OpenAI API calls (inputs and outputs)
+- Search operations
+- Error tracking
+
+Tracing is automatically initialized and configured for both API and command-line usage.
+
+To see Tracing in Azure AI Foundry:
+1. Create an Azure Application Insights Resource and copy the connection string
+2. Go to Tracing in your Azure AI Foundry and click Manage Data Source. Paste in the connection string.
+
+**⚠️ Important Tracing Configuration:**
+- The `NUM_SEARCH_RESULTS` parameter in `document_rag.py` is set to 15 documents
+- **Why this matters**: Higher values (e.g., 15+ documents) can cause input text fields to be hidden in Azure AI Foundry tracing due to token/character limits
+- If you need more search results, be aware that detailed input tracing may not be visible in the Azure AI Foundry interface (as currently constructed)
 
 ## Data Import Scripts
 

@@ -3,6 +3,10 @@ from pydantic import BaseModel
 from typing import List, Dict, Any
 import uvicorn
 
+# Initialize tracing first
+from tracing_setup import setup_tracing
+setup_tracing()
+
 # Import your search engine module (assuming you save the previous code as search_engine.py)
 from document_rag import process_question
 
@@ -26,7 +30,7 @@ class Document(BaseModel):
     document_types: str
     settlement_amount: Any
     sanction_programs: str
-    industries: str
+    industries: str | None
     score: float
 
 class ChatResponse(BaseModel):

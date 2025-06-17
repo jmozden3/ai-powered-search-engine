@@ -1,3 +1,6 @@
+# Import tracing setup FIRST - this sets env vars and configures instrumentation
+from tracing_setup import setup_tracing
+
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
 from azure.core.credentials import AzureKeyCredential
@@ -35,7 +38,7 @@ embeddings_model = AzureOpenAIEmbeddings(
 )
 
 # Configuration
-NUM_SEARCH_RESULTS = 15
+NUM_SEARCH_RESULTS = 2  # Note: Large values may prevent input tracing due to size limits
 K_NEAREST_NEIGHBORS = 30
 
 def run_search(search_query: str):
@@ -195,6 +198,9 @@ def process_question(question: str):
 
 if __name__ == "__main__":
     import json
+    
+    # Initialize tracing when running directly
+    setup_tracing()
     
     # Example usage
     user_question = input("Enter your question: ")
