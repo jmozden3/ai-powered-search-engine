@@ -39,8 +39,8 @@ class SearchParameters(BaseModel):
     """
     Pydantic model for structured search parameters.
     """
-    DateIssuedBegin: Optional[str] = None
-    DateIssuedEnd: Optional[str] = None
+    DateIssuedBegin: Optional[int] = None
+    DateIssuedEnd: Optional[int] = None
     LegalIssue: List[str] = []
     Program: List[str] = []
     DocumentType: List[str] = []
@@ -162,17 +162,17 @@ def create_final_json_payload(mapped_params: dict) -> dict:
         return None
 
 
-def process_user_query(user_input: str) -> dict:
+def basic_search(user_input: str) -> dict:
     """
-    Function 1: Main orchestrator - sequentially calls functions 2-4.
+    Main function for basic search with filters - converts user query to structured search parameters.
     
     Parameters:
     - user_input (str): The raw user query
     
     Returns:
-    - dict: Final JSON payload or None if error
+    - dict: Final JSON payload with search parameters or None if error
     """
-    print(f"Step 1: 🚀 Starting process for query: '{user_input}'")
+    print(f"Step 1: 🚀 Starting basic search process for query: '{user_input}'")
     print("="*60)
     
     # Function 2: Get structured outputs from LLM
@@ -194,7 +194,7 @@ def process_user_query(user_input: str) -> dict:
         return None
     
     print("="*60)
-    print("Step 1: 🎉 Process completed successfully!")
+    print("Step 1: 🎉 Basic search process completed successfully!")
     return final_payload
 
 
@@ -214,7 +214,7 @@ def example_usage():
         print("="*80)
         
         # Run complete process
-        final_json = process_user_query(query)
+        final_json = basic_search(query)
         
         if final_json:
             print("\n📋 Final JSON Payload:")
@@ -242,7 +242,7 @@ if __name__ == "__main__":
             break
             
         # Run complete 4-function process
-        final_json = process_user_query(user_input)
+        final_json = basic_search(user_input)
         
         if final_json:
             print("\n📋 Final JSON Payload:")

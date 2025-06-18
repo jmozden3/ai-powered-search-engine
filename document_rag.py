@@ -160,18 +160,20 @@ Synthesize these results into a clear, complete answer. Remember to cite which d
         {"role": "system", "content": final_prompt},
         {"role": "user", "content": llm_input}
     ]
+    #print(messages)
     
     response = openai_client.chat.completions.create(
         messages=messages,
         model=aoai_deployment,
-        max_completion_tokens=1000
+        max_completion_tokens=2000
     )
+    #print(response.choices[0].message.content)
     
     return response.choices[0].message.content
 
-def process_question(question: str):
+def advanced_search(question: str):
     """
-    Main function that takes a user question, performs search, and generates answer.
+    Main function for advanced document search with RAG - performs semantic search and generates answers.
     
     Args:
         question: The user's question
@@ -179,6 +181,8 @@ def process_question(question: str):
     Returns:
         dict: Contains the question, documents, and answer
     """
+    print(f"🔍 Starting advanced search for: '{question}'")
+    
     # Step 1: User input (already provided)
     
     # Step 2 & 3: Convert to vector embedding and run search
@@ -186,6 +190,8 @@ def process_question(question: str):
     
     # Step 4: Generate answer via LLM + search results
     answer = generate_answer(question, documents)
+    
+    print(f"✅ Advanced search completed - found {len(documents)} documents")
     
     return {
         "question": question,
@@ -198,10 +204,10 @@ if __name__ == "__main__":
     
     # Example usage
     user_question = input("Enter your question: ")
-    result = process_question(user_question)
+    result = advanced_search(user_question)
     
     print("\n" + "="*80)
-    print("SEARCH AND ANSWER RESULT")
+    print("ADVANCED SEARCH AND ANSWER RESULT")
     print("="*80)
     
     print(f"\nQuestion: {result['question']}")
