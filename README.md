@@ -97,9 +97,11 @@ The application includes comprehensive OpenTelemetry tracing that captures:
 Tracing is automatically initialized and configured for both API and command-line usage.
 
 To see Tracing in Azure AI Foundry:
-1. Create an Azure Application Insights Resource and copy the connection string
-2. Go to Tracing in your Azure AI Foundry and click Manage Data Source. Paste in the connection string.
-*Warning: Large Input or Output token usage may result in Azure AI Foundry not logging the trace*
+1. In your Azure portal, create an Azure Application Insights Resource and copy the connection string (can be found on the resource overview page)
+2. Go to Tracing in your Azure AI Foundry Project and click Manage Data Source. Paste in the connection string.
+3. Now, when you run your application, you will see tracing metrics in the Tracing tab. 
+> **Warning:** There is a 32KB limit on traces. Anything above this limit will likely not show up in Foundry Tracing Portal.  
+> [Learn more about trace size limits and possible workarounds.](https://learn.microsoft.com/en-us/answers/questions/543396/how-to-increase-the-size-of-messages-logged-in-app)
 
 ## Data Import Scripts
 
